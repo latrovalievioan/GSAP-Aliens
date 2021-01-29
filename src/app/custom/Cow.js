@@ -11,12 +11,12 @@ export default class Cow extends EventEmitter {
     super();
     this.cow = document.querySelector(".cow");
   }
-  moveTo() {
-    gsap.to(this.cow, { y: "-390px", id: "cowAbduction" });
+  async moveTo() {
+    await gsap.to(this.cow, { y: "-390px", id: "cowAbduction" });
     this.emit(Cow.events.ABDUCT_COMPLETED);
   }
 
-  hide() {
-    gsap.to(this.cow, { opacity: "0", id: "cowHide" });
+  async hide() {
+    await gsap.to(this.cow, { opacity: "0", id: "cowHide" });
   }
 }

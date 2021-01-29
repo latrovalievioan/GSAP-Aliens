@@ -17,19 +17,34 @@ export default class Saucer extends EventEmitter {
     this._beamBottomElement = document.querySelector("#beam-bottom");
   }
 
-  moveTo() {
-    gsap.to(this._saucerElement, { x: "-835px", id: "flyIn" });
-    this.emit(Saucer.events.FLY_IN);
-    gsap.to(this._saucerElement, { x: "-1800px", id: "flyOut" });
-    this.emit(Saucer.events.FLY_AWAY);
+  async moveTo(v) {
+    if (v === "in") {
+      await gsap.to(this._saucerElement, { x: "-835px", id: "flyIn" });
+      this.emit(Saucer.events.FLY_IN);
+    } else {
+      await gsap.to(this._saucerElement, { x: "-1800px", id: "flyOut" });
+      this.emit(Saucer.events.FLY_AWAY);
+    }
   }
 
-  toggleBeam() {
-    gsap.to(this._beamTopElement, { opacity: "0.6", id: "showTopBeam" });
-    gsap.to(this._beamBottomElement, { opacity: "0.6", id: "showBottomBeam" });
-    this.emit(Saucer.events.BEAM_SHOW);
-    gsap.to(this._beamTopElement, { opacity: "0", id: "hideTopBeam" });
-    gsap.to(this._beamBottomElement, { opacity: "0", id: "hideBottomBeam" });
-    this.emit(Saucer.events.BEAM_HIDE);
+  async toggleBeam(v) {
+    if (v === "on") {
+      await gsap.to(this._beamTopElement, {
+        opacity: "0.6",
+        id: "showTopBeam",
+      });
+      await gsap.to(this._beamBottomElement, {
+        opacity: "0.6",
+        id: "showBottomBeam",
+      });
+      this.emit(Saucer.events.BEAM_SHOW);
+    } else {
+      await gsap.to(this._beamTopElement, { opacity: "0", id: "hideTopBeam" });
+      await gsap.to(this._beamBottomElement, {
+        opacity: "0",
+        id: "hideBottomBeam",
+      });
+      this.emit(Saucer.events.BEAM_HIDE);
+    }
   }
 }

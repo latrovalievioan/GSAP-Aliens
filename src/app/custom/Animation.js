@@ -11,9 +11,11 @@ export default class Animation extends EventEmitter {
   }
 
   async start() {
-    await this.saucer.moveTo();
-    await this.saucer.toggleBeam();
+    await this.saucer.moveTo("in");
+    await this.saucer.toggleBeam("on");
     await this.cow.moveTo();
     await this.cow.hide();
+    await this.saucer.toggleBeam("off");
+    await this.saucer.moveTo("out");
   }
 }
